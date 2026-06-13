@@ -1,5 +1,8 @@
 {
   "android": {
     "package": "com.anonymous.labourlink"
-  }
+  },
+  "plugins": [
+    "@react-native-community/datetimepicker"
+  ]
 }

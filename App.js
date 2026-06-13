@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as Location from "expo-location";
 
 import SplashScreen from "./src/screens/SplashScreen";
 import LoginScreen from "./src/screens/LoginScreen";
@@ -11,6 +12,7 @@ import OTPScreen from "./src/screens/OTPScreen";
 import CompleteProfileScreen from "./src/screens/CompleteProfileScreen";
 import DashboardScreen from "./src/screens/DashboardScreen";
 import JobsScreen from "./src/screens/JobsScreen";
+import JobDetailsScreen from "./src/screens/JobDetailsScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +31,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Workers" component={WorkersScreen} />
         <Stack.Screen name="Jobs" component={JobsScreen} />
+        <Stack.Screen  name="JobDetails"  component={JobDetailsScreen}/>
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="CompleteProfile" component={CompleteProfileScreen} />
         <Stack.Screen name="Dashboard" component={DashboardScreen}/>

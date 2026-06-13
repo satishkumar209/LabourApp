@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 
 export default function DashboardScreen({
@@ -17,142 +18,188 @@ export default function DashboardScreen({
   if (!user) {
     return (
       <View style={styles.center}>
-        <Text style={{ fontSize: 18 }}>
-          User data not found
-        </Text>
+        <Text>User data not found</Text>
       </View>
     );
   }
 
+  const services = [
+    {
+      icon: "👷",
+      title: "Labour",
+    },
+    {
+      icon: "⚡",
+      title: "Electrician",
+    },
+    {
+      icon: "🔧",
+      title: "Plumber",
+    },
+    {
+      icon: "🎨",
+      title: "Painter",
+    },
+    {
+      icon: "🧱",
+      title: "Mason",
+    },
+    {
+      icon: "🪚",
+      title: "Carpenter",
+    },
+  ];
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
+        {/* HEADER */}
+
         <View style={styles.header}>
-          <Text style={styles.welcome}>
-            Hello, {user.name || "User"} 👋
-          </Text>
+          <View>
+            <Text style={styles.greeting}>
+              Hello 👋
+            </Text>
 
-          <Text style={styles.subText}>
-            Welcome to LabourLink
-          </Text>
+            <Text style={styles.userName}>
+              {user.name}
+            </Text>
+
+            <Text style={styles.subtitle}>
+              Find Skilled Workers Near You
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            style={styles.profileCircle}
+            onPress={() =>
+              navigation.navigate(
+                "Profile",
+                { user }
+              )
+            }
+          >
+            <Text style={{ fontSize: 24 }}>
+              👤
+            </Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Search */}
-        <TextInput
-          placeholder="Search workers..."
-          placeholderTextColor="#777"
-          style={styles.search}
-        />
+        {/* SEARCH */}
 
-        {/* Account Card */}
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Search workers, services..."
+            placeholderTextColor="#999"
+            style={styles.search}
+          />
+        </View>
+
+        {/* ACCOUNT CARD */}
+
         <View style={styles.accountCard}>
-          <Text style={styles.cardTitle}>
-            LabourLink Account
+          <Text style={styles.accountTitle}>
+            LabourLink Premium
           </Text>
 
-          <Text style={styles.cardText}>
-            📱 Mobile: {user.mobile}
+          <Text style={styles.accountText}>
+            📱 {user.mobile}
           </Text>
 
-          <Text style={styles.cardText}>
-            👤 Role: {user.role}
+          <Text style={styles.accountText}>
+            👤 {user.role}
           </Text>
         </View>
 
-        {/* Services */}
+        {/* STATS */}
+
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>
+              12
+            </Text>
+
+            <Text style={styles.statLabel}>
+              Workers
+            </Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>
+              4
+            </Text>
+
+            <Text style={styles.statLabel}>
+              Jobs
+            </Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>
+              2
+            </Text>
+
+            <Text style={styles.statLabel}>
+              Active
+            </Text>
+          </View>
+        </View>
+
+        {/* SERVICES */}
+
         <Text style={styles.sectionTitle}>
           Popular Services
         </Text>
 
         <View style={styles.grid}>
-          <TouchableOpacity
-            style={styles.serviceCard}
-            onPress={() =>
-              navigation.navigate(
-                "Workers",
-                { user }
-              )
-            }
-          >
-            <Text style={styles.icon}>
-              👷
-            </Text>
+          {services.map(
+            (item, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.serviceCard}
+                onPress={() =>
+                  navigation.navigate(
+                    "Workers",
+                    { user }
+                  )
+                }
+              >
+                <Text
+                  style={
+                    styles.serviceIcon
+                  }
+                >
+                  {item.icon}
+                </Text>
 
-            <Text style={styles.serviceText}>
-              Labour
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.serviceCard}
-            onPress={() =>
-              navigation.navigate(
-                "Workers",
-                { user }
-              )
-            }
-          >
-            <Text style={styles.icon}>
-              ⚡
-            </Text>
-
-            <Text style={styles.serviceText}>
-              Electrician
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.serviceCard}
-            onPress={() =>
-              navigation.navigate(
-                "Workers",
-                { user }
-              )
-            }
-          >
-            <Text style={styles.icon}>
-              🔧
-            </Text>
-
-            <Text style={styles.serviceText}>
-              Plumber
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.serviceCard}
-            onPress={() =>
-              navigation.navigate(
-                "Workers",
-                { user }
-              )
-            }
-          >
-            <Text style={styles.icon}>
-              🎨
-            </Text>
-
-            <Text style={styles.serviceText}>
-              Painter
-            </Text>
-          </TouchableOpacity>
+                <Text
+                  style={
+                    styles.serviceText
+                  }
+                >
+                  {item.title}
+                </Text>
+              </TouchableOpacity>
+            )
+          )}
         </View>
 
-        {/* Job Banner */}
+        {/* BANNER */}
+
         <View style={styles.banner}>
           <Text style={styles.bannerTitle}>
-            Need Skilled Workers?
+            Need Workers Fast?
           </Text>
 
           <Text style={styles.bannerText}>
-            Post a job and hire instantly.
+            Post a job and get workers
+            instantly.
           </Text>
 
           <TouchableOpacity
-            style={styles.postBtn}
+            style={styles.bannerBtn}
             onPress={() =>
               navigation.navigate(
                 "Jobs",
@@ -160,13 +207,18 @@ export default function DashboardScreen({
               )
             }
           >
-            <Text style={styles.postBtnText}>
-              Post Job
+            <Text
+              style={
+                styles.bannerBtnText
+              }
+            >
+              Post Job Now
             </Text>
           </TouchableOpacity>
         </View>
 
-        {/* Activity */}
+        {/* ACTIVITY */}
+
         <Text style={styles.sectionTitle}>
           Recent Activity
         </Text>
@@ -192,10 +244,27 @@ export default function DashboardScreen({
         <View style={{ height: 120 }} />
       </ScrollView>
 
-      {/* Bottom Navigation */}
+      {/* FLOATING BUTTON */}
+
+      <TouchableOpacity
+        style={styles.floatingBtn}
+        onPress={() =>
+          navigation.navigate(
+            "Jobs",
+            { user }
+          )
+        }
+      >
+        <Text style={styles.floatingText}>
+          +
+        </Text>
+      </TouchableOpacity>
+
+      {/* BOTTOM NAV */}
+
       <View style={styles.bottomNav}>
         <TouchableOpacity>
-          <Text style={styles.navText}>
+          <Text style={styles.activeNav}>
             🏠 Home
           </Text>
         </TouchableOpacity>
@@ -239,14 +308,14 @@ export default function DashboardScreen({
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F7F8FA",
+    backgroundColor: "#F5F7FB",
   },
 
   center: {
@@ -256,48 +325,94 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    marginTop: 20,
-    marginHorizontal: 20,
+    backgroundColor: "#111827",
+    padding: 25,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
-  welcome: {
+  greeting: {
+    color: "#fff",
+    fontSize: 16,
+  },
+
+  userName: {
+    color: "#fff",
     fontSize: 28,
     fontWeight: "bold",
-    color: "#111827",
   },
 
-  subText: {
-    color: "#6B7280",
+  subtitle: {
+    color: "#D1D5DB",
     marginTop: 4,
+  },
+
+  profileCircle: {
+    backgroundColor: "#FFD400",
+    width: 55,
+    height: 55,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  searchContainer: {
+    marginHorizontal: 20,
+    marginTop: -20,
   },
 
   search: {
     backgroundColor: "#fff",
-    marginHorizontal: 20,
-    marginTop: 20,
     borderRadius: 15,
-    paddingHorizontal: 15,
     height: 55,
-    elevation: 2,
+    paddingHorizontal: 20,
+    elevation: 4,
   },
 
   accountCard: {
     backgroundColor: "#FFD400",
-    marginHorizontal: 20,
+    margin: 20,
     borderRadius: 20,
     padding: 20,
-    marginTop: 20,
-    marginBottom: 20,
   },
 
-  cardTitle: {
+  accountTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
   },
 
-  cardText: {
+  accountText: {
     fontSize: 15,
+    marginTop: 4,
+  },
+
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginBottom: 25,
+  },
+
+  statCard: {
+    backgroundColor: "#fff",
+    width: "28%",
+    padding: 15,
+    borderRadius: 15,
+    alignItems: "center",
+    elevation: 3,
+  },
+
+  statNumber: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#111827",
+  },
+
+  statLabel: {
+    color: "#666",
     marginTop: 5,
   },
 
@@ -315,54 +430,52 @@ const styles = StyleSheet.create({
   },
 
   serviceCard: {
-    width: "42%",
     backgroundColor: "#fff",
-    borderRadius: 16,
+    width: "42%",
     paddingVertical: 25,
+    borderRadius: 18,
     alignItems: "center",
     marginBottom: 15,
-    elevation: 2,
+    elevation: 3,
   },
 
-  icon: {
-    fontSize: 30,
+  serviceIcon: {
+    fontSize: 34,
     marginBottom: 10,
   },
 
   serviceText: {
     fontWeight: "600",
-    fontSize: 15,
   },
 
   banner: {
-    backgroundColor: "#0F172A",
     margin: 20,
+    backgroundColor: "#0F172A",
     borderRadius: 20,
     padding: 20,
   },
 
   bannerTitle: {
     color: "#fff",
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
   },
 
   bannerText: {
-    color: "#ddd",
-    marginTop: 8,
+    color: "#D1D5DB",
+    marginTop: 10,
   },
 
-  postBtn: {
+  bannerBtn: {
     backgroundColor: "#FFD400",
     marginTop: 15,
-    padding: 14,
+    padding: 15,
     borderRadius: 12,
     alignItems: "center",
   },
 
-  postBtnText: {
+  bannerBtnText: {
     fontWeight: "bold",
-    fontSize: 16,
   },
 
   activityCard: {
@@ -371,21 +484,43 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 15,
     borderRadius: 15,
-    elevation: 1,
+    elevation: 2,
+  },
+
+  floatingBtn: {
+    position: "absolute",
+    bottom: 85,
+    right: 20,
+    backgroundColor: "#FFD400",
+    width: 65,
+    height: 65,
+    borderRadius: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 10,
+  },
+
+  floatingText: {
+    fontSize: 35,
+    fontWeight: "bold",
   },
 
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 15,
     backgroundColor: "#fff",
+    paddingVertical: 15,
     borderTopWidth: 1,
     borderTopColor: "#eee",
   },
 
+  activeNav: {
+    color: "#FFD400",
+    fontWeight: "bold",
+  },
+
   navText: {
+    color: "#555",
     fontWeight: "600",
-    fontSize: 14,
   },
 });
